@@ -16,7 +16,7 @@ export class AppHeader extends connect(store)(LitElement) {
         <nav>
           <li>
             <a href="/">
-              ${icons.employeeIcon('#f36f22')} ${msg('Employess')}</a
+              ${icons.employeeIcon('#f36f22')} ${msg('Employees')}</a
             >
           </li>
           <li>

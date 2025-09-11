@@ -7,6 +7,11 @@ import './components/Header';
 import './pages/Home';
 
 export class AppRoot extends connect(store)(LitElement) {
+  stateChanged(state) {
+    // Örnek: state'deki employee listesini local property olarak al
+    this.employees = state.employees;
+  }
+
   firstUpdated() {
     const outlet = this.renderRoot.querySelector('#router');
     const router = new Router(outlet);
@@ -26,6 +31,9 @@ export class AppRoot extends connect(store)(LitElement) {
       <main>
         <app-header></app-header>
         <div id="router"></div>
+        <div>
+          Employees count: ${this.employees ? this.employees.length : 0}
+        </div>
       </main>
     `;
   }
