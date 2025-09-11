@@ -5,6 +5,7 @@
  */
 
 import {LitElement, html, css} from 'lit';
+import {msg} from '@lit/localize';
 
 /**
  * An example element.
@@ -51,7 +52,7 @@ export class MyElement extends LitElement {
     return html`
       <h1>${this.sayHello(this.name)}!</h1>
       <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
+        Click Count: ${this.count} ${msg('Hello Worlds')}
       </button>
       <slot></slot>
     `;
