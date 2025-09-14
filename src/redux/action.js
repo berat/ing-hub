@@ -1,4 +1,4 @@
-import {nanoid} from 'nanoid';
+import {nanoid} from 'nanoid/non-secure';
 import {
   ADD_EMPLOYEE,
   UPDATE_EMPLOYEE,
@@ -8,7 +8,7 @@ import {
   UPDATE_DEFAULT_VIEW,
 } from './types';
 
-export const addEmploye = (employee) => {
+export const addEmployee = (employee) => {
   return {
     type: ADD_EMPLOYEE,
     data: {

@@ -61,7 +61,7 @@ export const reducer = (state = INITIAL_STATE, action) => {
         employees: newEmployees,
         pagination: {
           ...state.pagination,
-          pageSize: Math.ceil(newEmployees.length / constants.PER_SIZE),
+          totalPage: Math.ceil(newEmployees.length / constants.PER_SIZE),
         },
       };
     }
@@ -90,16 +90,16 @@ export const getCurrentEmployee = (state) => state.currentEmployee;
 export const getPagination = (state) => state.pagination;
 export const getDefaultView = (state) => state.ui.defaultView;
 
-export const getemployeesByPage = createSelector(
+export const getEmployeesByPage = createSelector(
   getEmployees,
   getPagination,
   (employees, pagination) => {
     if (!employees || employees.length === 0) return [];
 
-    const {page, pageSize} = pagination;
+    const {page} = pagination;
 
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const startIndex = (page - 1) * constants.PER_SIZE;
+    const endIndex = startIndex + constants.PER_SIZE;
 
     return employees.slice(startIndex, endIndex);
   }

@@ -12,6 +12,8 @@ export class CustomButton extends LitElement {
         type: 'table' | 'card' | 'edit' | 'remove' | 'close' | undefined,
       },
       iconColor: {type: String},
+      bgColor: {type: String},
+      textColor: {type: String},
     };
   }
 
@@ -26,22 +28,40 @@ export class CustomButton extends LitElement {
 
     if (type === 'icon') {
       return html`
-        <button onClick=${onClick}>${icons[icon](iconColor)}</button>
+        <button
+          style="
+                   --btn-bg: ${this.bgColor || 'none'};
+                   --btn-color: ${this.textColor || 'none'};
+                 "
+          @click=${onClick}
+        >
+          ${icons[icon](iconColor)}
+        </button>
       `;
     }
 
     return html`
-      <button onClick=${onClick}>
-        ${type == 'prefix' && icons[icon](iconColor)} ${label}
+      <button
+        style="--btn-bg: ${this.bgColor || 'none'};--btn-color: ${this
+          .textColor || 'none'};"
+        @click=${onClick}
+      >
+        ${type == 'prefix' ? icons[icon](iconColor) : undefined} ${label}
       </button>
     `;
   }
 
   static styles = css`
     button {
-      background: none;
+      background: var(--btn-bg);
       outline: none;
+      color: var(--btn-color);
       border: 0;
+      border-radius: 4px;
+      padding: 8px 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
     }
 
     button:hover {

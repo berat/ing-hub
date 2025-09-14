@@ -1,7 +1,11 @@
+import {Router} from '@vaadin/router';
 import {LitElement, html, css} from 'lit';
+import {connect} from 'pwa-helpers';
+import {currentEmployee} from '../../redux/action';
+import {store} from '../../redux/store';
 import '../Atoms/Button';
 
-export class EmployeeTable extends LitElement {
+export class EmployeeTable extends connect(store)(LitElement) {
   static properties = {
     employees: {type: Array},
   };
@@ -9,6 +13,24 @@ export class EmployeeTable extends LitElement {
   constructor() {
     super();
     this.employees = [];
+  }
+
+  handleDelete(employee) {
+    store.dispatch(currentEmployee(employee));
+    this.openModal();
+  }
+  openModal() {
+    this.dispatchEvent(
+      new CustomEvent('open-modal', {
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  handleEdit(employee) {
+    store.dispatch(currentEmployee(employee));
+    Router.go('/employee-management/edit');
   }
 
   render() {
@@ -29,28 +51,30 @@ export class EmployeeTable extends LitElement {
           </tr>
         </thead>
         <tbody>
-          ${employees.map(
-            (emp) => html`
+          ${employees?.map(
+            (employee) => html`
               <tr>
-                <td class="bold-item">${emp.firstName}</td>
-                <td class="bold-item">${emp.lastName}</td>
-                <td>${emp.dateOfEmployee}</td>
-                <td>${emp.dateOfBirth}</td>
-                <td>${emp.email}</td>
-                <td>${emp.phone}</td>
-                <td>${emp.department}</td>
-                <td>${emp.position}</td>
+                <td class="bold-item">${employee.firstName}</td>
+                <td class="bold-item">${employee.lastName}</td>
+                <td>${employee.dateOfEmployee}</td>
+                <td>${employee.dateOfBirth}</td>
+                <td>${employee.email}</td>
+                <td>${employee.phone}</td>
+                <td>${employee.department}</td>
+                <td>${employee.position}</td>
                 <td class="column-action">
                   <custom-button
                     type="icon"
                     icon="editIcon"
                     iconColor="#f36f22"
+                    .onClick=${() => this.handleEdit(employee)}
                   ></custom-button>
 
                   <custom-button
                     type="icon"
                     icon="trashIcon"
                     iconColor="#f36f22"
+                    .onClick=${() => this.handleDelete(employee)}
                   ></custom-button>
                 </td>
               </tr>

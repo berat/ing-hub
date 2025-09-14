@@ -1,6 +1,7 @@
 import * as data from './data';
 import * as constants from './constants';
 
+// We can get data from LocalStorage
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('ing_hub');
@@ -28,6 +29,7 @@ export const loadState = () => {
   }
 };
 
+// We can save data to LocalStorage
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify({

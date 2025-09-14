@@ -7,7 +7,15 @@ import * as icons from '../Atoms/icons';
 const logo = '/assets/logo.png';
 
 export class AppHeader extends connect(store)(LitElement) {
+  toggleLanguage() {
+    const newLang = this.language === 'en' ? 'tr' : 'en';
+
+    // Did not find to change lit-locale
+  }
+
   render() {
+    const flagToShow = this.language === 'tr' ? icons.trIcon() : icons.enIcon();
+
     return html`
       <header>
         <a href="/">
@@ -23,6 +31,11 @@ export class AppHeader extends connect(store)(LitElement) {
             <a href="/employee-management/add">
               ${icons.addIcon('#f36f22')} ${msg('Add New')}
             </a>
+          </li>
+          <li>
+            <button @click=${this.toggleLanguage} class="lang-btn">
+              <img src=${flagToShow} alt="Switch Language" />
+            </button>
           </li>
         </nav>
       </header>
